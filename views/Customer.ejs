@@ -96,7 +96,8 @@
 
         <% } %>
 
-        <button type="submit" class="btn btn-primary">Add Customer</button>
+        <button id="btnAdd" name="btnAdd" type="submit" class="btn btn-primary">Add Customer</button>
+        <button id ="btnModify" name = "btnModify" type="submit" class="btn btn-primary">Modify Customer</button>
         <a id="ancharSearch" class="btn btn-primary">Search Customer</a>
         <a id="ancharDelete" class="btn btn-primary">Delete Customer</a>
       </form>
@@ -135,7 +136,7 @@
                   class="btn btn-danger"
                   type="submit"
                   >Delete
-                </a>
+                </a>             
               </td>
             </tr>
             <% counts++ %> <% } %>

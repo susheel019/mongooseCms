@@ -67,11 +67,13 @@ class Customer {
 
   async modifyCustomer(id) {
     var id = parseInt(id);
-    console.log(this.name);
-    var data = await Customer.CustomerModel.updateOne({ id: id } ,{$set :{...this}});
-    // data.name = this.name;
-    // data.address = this.address;
-    // data.mobile = this.mobile;
+    var customer = await Customer.CustomerModel.findOne({id:id});
+    customer.id = this.id
+    customer.name = this.name;
+    customer.address = this.address;
+    customer.mobile = this.mobile;
+    customer.save()
+    return customer;
   }
 }
 module.exports = Customer;

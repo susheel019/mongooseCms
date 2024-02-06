@@ -16,6 +16,7 @@ router.post("/", urlencodedParser, async (req, res) => {
   //we need data
 
   // console.log(req.body);
+  if('btnAdd' in req.body){
   var cus = new Customer();
   cus.id = parseInt(req.body.txtId);
   cus.name = req.body.txtName;
@@ -39,7 +40,24 @@ router.post("/", urlencodedParser, async (req, res) => {
       res.render("Customer", { cusArr: [], err: err });
     }
   );
-});
+}else if('btnModify' in req.body){
+  var cus = new Customer();
+  cus.id = req.body.txtId
+  cus.name = req.body.txtName;
+  cus.address = req.body.txtAddress;
+  cus.mobile = req.body.txtMobile;
+  var cus = cus.modifyCustomer(cus.id);
+  cus.then((data) => {
+    var p = Customer.showAllCustomer();
+    p.then((data) => {
+      res.render("Customer", { cusArr: data });
+    });
+  });
+  
+
+}
+}
+);
 
 router.get("/search/:id", (req, res) => {
   var cus = new Customer();
@@ -49,7 +67,6 @@ router.get("/search/:id", (req, res) => {
     var p = Customer.showAllCustomer();
     p.then(
       (data) => {
-        console.log(cus);
         res.render("Customer", { cusArr: data, cus: cus });
       },
       (err) => {
@@ -73,23 +90,6 @@ router.get("/delete/:id", (req, res) => {
         res.render("Customer", { cusArr: data, err: err });
       }
     );
-  });
-});
-
-router.get("/modify/:id", urlencodedParser , (req, res) => {
-  var cus = new Customer();
-  cus.id = req.body.txtId
-  console.log(cus.id)
-  console.log(req.body.txtName);;
-  cus.name = req.body.txtName;
-  cus.address = req.body.txtAddress;
-  cus.mobile = req.body.txtMobile;
-  var cus = cus.modifyCustomer(req.params.id);
-  cus.then((data) => {
-    var p = Customer.showAllCustomer();
-    p.then((data) => {
-      res.render("Customer", { cusArr: data });
-    });
   });
 });
 
